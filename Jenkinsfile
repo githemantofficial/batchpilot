@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -7,13 +8,10 @@ pipeline {
     }
 
     environment {
-    IMAGE_NAME = 'batchpilot-api'
-    PYTHON_EXE = 'C:/Users/heman/AppData/Local/Programs/Python/Python313/python.exe'
-    TRIVY_EXE = 'C:/Tools/Trivy/trivy.exe'
-
+        IMAGE_NAME = 'batchpilot-api'
+        PYTHON_EXE = 'C:/Users/heman/AppData/Local/Programs/Python/Python313/python.exe'
+        TRIVY_EXE = 'C:/Tools/Trivy/trivy.exe'
     }
-
-    
 
     stages {
         stage('Verify Tools') {
@@ -45,16 +43,17 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-    steps {
-        bat 'docker build -t %IMAGE_NAME%:ci-%BUILD_NUMBER% .'
-    }
-}
+            steps {
+                bat 'docker build -t %IMAGE_NAME%:ci-%BUILD_NUMBER% .'
+            }
+        }
 
-stage('Container Vulnerability Scan') {
-    steps {
-        bat '"%TRIVY_EXE%" image --scanners vuln --severity HIGH,CRITICAL --exit-code 0 %IMAGE_NAME%:ci-%BUILD_NUMBER%'
+        stage('Container Vulnerability Scan') {
+            steps {
+                bat '"%TRIVY_EXE%" image --scanners vuln --severity HIGH,CRITICAL --exit-code 0 %IMAGE_NAME%:ci-%BUILD_NUMBER%'
+            }
+        }
     }
-}
 
     post {
         success {
@@ -66,3 +65,4 @@ stage('Container Vulnerability Scan') {
         }
     }
 }
+```
