@@ -7,44 +7,36 @@ pipeline {
     }
 
     environment {
-    IMAGE_NAME = 'batchpilot-api'
-    PYTHON_EXE = 'C:/Users/heman/AppData/Local/Programs/Python/Python313/python.exe'
-}
+        IMAGE_NAME = 'batchpilot-api'
+        PYTHON_EXE = 'C:/Users/heman/AppData/Local/Programs/Python/Python313/python.exe'
     }
 
     stages {
-
         stage('Verify Tools') {
-    steps {
-        bat '"%PYTHON_EXE%" --version'
-        bat 'docker --version'
-        bat 'docker info --format "{{.ServerVersion}}"'
-    }
-}
+            steps {
+                bat '"%PYTHON_EXE%" --version'
+                bat 'docker --version'
+                bat 'docker info --format "{{.ServerVersion}}"'
             }
         }
 
-    stage('Install Dependencies') {
-    steps {
-        bat '"%PYTHON_EXE%" -m venv .venv-ci'
-        bat '".venv-ci\\Scripts\\python.exe" -m pip install --upgrade pip'
-        bat '".venv-ci\\Scripts\\python.exe" -m pip install -r requirements-dev.txt'
-    }
-}
-    }
-}
+        stage('Install Dependencies') {
+            steps {
+                bat '"%PYTHON_EXE%" -m venv .venv-ci'
+                bat '".venv-ci\\Scripts\\python.exe" -m pip install --upgrade pip'
+                bat '".venv-ci\\Scripts\\python.exe" -m pip install -r requirements-dev.txt'
             }
         }
 
         stage('Code Quality') {
             steps {
-                bat '.venv-ci\\Scripts\\python.exe -m ruff check app tests'
+                bat '".venv-ci\\Scripts\\python.exe" -m ruff check app tests'
             }
         }
 
         stage('Automated Tests') {
             steps {
-                bat '.venv-ci\\Scripts\\python.exe -m pytest -v'
+                bat '".venv-ci\\Scripts\\python.exe" -m pytest -v'
             }
         }
 
