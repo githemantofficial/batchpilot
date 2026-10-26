@@ -31,3 +31,9 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Jenkins CI environment
+.venv-ci/
+
+# Test output
+pytest-results.xml
