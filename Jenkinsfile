@@ -7,24 +7,30 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = 'batchpilot-api'
+    IMAGE_NAME = 'batchpilot-api'
+    PYTHON_EXE = 'C:\Users\heman\AppData\Local\Programs\Python\Python313\python.exe'
+}
     }
 
     stages {
 
         stage('Verify Tools') {
-            steps {
-                bat 'py -3 --version'
-                bat 'docker --version'
-                bat 'docker info --format "{{.ServerVersion}}"'
+    steps {
+        bat '"%PYTHON_EXE%" --version'
+        bat 'docker --version'
+        bat 'docker info --format "{{.ServerVersion}}"'
+    }
+}'
             }
         }
 
         stage('Install Dependencies') {
-            steps {
-                bat 'py -3 -m venv .venv-ci'
-                bat '.venv-ci\\Scripts\\python.exe -m pip install --upgrade pip'
-                bat '.venv-ci\\Scripts\\python.exe -m pip install -r requirements-dev.txt'
+    steps {
+        bat '"%PYTHON_EXE%" -m venv .venv-ci'
+        bat '".venv-ci\\Scripts\\python.exe" -m pip install --upgrade pip'
+        bat '".venv-ci\\Scripts\\python.exe" -m pip install -r requirements-dev.txt'
+    }
+}
             }
         }
 
