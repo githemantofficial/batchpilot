@@ -8,7 +8,7 @@ pipeline {
 
     environment {
     IMAGE_NAME = 'batchpilot-api'
-    PYTHON_EXE = 'C:\Users\heman\AppData\Local\Programs\Python\Python313\python.exe'
+    PYTHON_EXE = 'C:/Users/heman/AppData/Local/Programs/Python/Python313/python.exe'
 }
     }
 
@@ -24,11 +24,13 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+    stage('Install Dependencies') {
     steps {
         bat '"%PYTHON_EXE%" -m venv .venv-ci'
         bat '".venv-ci\\Scripts\\python.exe" -m pip install --upgrade pip'
         bat '".venv-ci\\Scripts\\python.exe" -m pip install -r requirements-dev.txt'
+    }
+}
     }
 }
             }
