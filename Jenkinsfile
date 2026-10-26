@@ -20,7 +20,7 @@ pipeline {
         bat 'docker --version'
         bat 'docker info --format "{{.ServerVersion}}"'
     }
-}'
+}
             }
         }
 
